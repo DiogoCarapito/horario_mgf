@@ -8,7 +8,7 @@ def main():
     
     
     st.subheader("Crianças com 1 ano")
-    col_crianças_1_ano_1, col_crianças_1_ano_2, n_crianças_1_ano_3 = st.columns(3)
+    col_crianças_1_ano_1, col_crianças_1_ano_2, n_crianças_1_ano_3 = st.columns(3, vertical_alignment="bottom")
 
     with col_crianças_1_ano_1:
         n_crianças_1_ano = st.number_input(
@@ -32,7 +32,7 @@ def main():
 
     st.subheader("Crianças entre 1 e 2 anos")
 
-    col_crianças_2_ano_1, col_crianças_2_ano_2, n_crianças_2_ano_3 = st.columns(3)
+    col_crianças_2_ano_1, col_crianças_2_ano_2, n_crianças_2_ano_3 = st.columns(3, vertical_alignment="bottom")
 
     with col_crianças_2_ano_1:
         n_crianças_1_ano = st.number_input(
@@ -56,7 +56,7 @@ def main():
 
     st.subheader("Crianças e jovens (2-18 anos)")
     
-    col_crianças_jovens_1, col_crianças_jovens_2, col_crianças_jovens_3 = st.columns(3)
+    col_crianças_jovens_1, col_crianças_jovens_2, col_crianças_jovens_3 = st.columns(3, vertical_alignment="bottom")
 
     with col_crianças_jovens_1:
         n_crianças_2_18_anos = st.number_input(
@@ -80,22 +80,60 @@ def main():
     
     st.divider()
     
+    st.subheader("Mulheres em idade fértil")
+    
+    col_mulheres_idade_fertil_1, col_mulheres_idade_fertil_2, col_mulheres_idade_fertil_3 = st.columns(3, vertical_alignment="bottom")
+    
+    with col_mulheres_idade_fertil_1:
+        n_mulheres_idade_fertil = st.number_input(
+            "Número de mulheres em idade fértil (15-54 anos)",
+            step=1
+            )
+    with col_mulheres_idade_fertil_2:
+        taxa_utilização = st.number_input(
+            "Taxa de utilização de consultas",
+            step=1
+            )
+    
+    with col_mulheres_idade_fertil_3:
+        st.write("?")
     
     
-    n_mulheres_idade_fertil = st.number_input(
-        "Número de mulheres em idade fértil (15-54 anos)",
-        step=1
-        )
+    st.divider()
+    
+    st.subheader("Grávidas")
     
     n_nascimentos_ano_anterior = st.number_input(
         "Número de nascimentos no ano anterior",
         step=1
         )
 
-    n_diabeticos = st.number_input(
-        "Número de diabéticos",
-        step=1
-        )
+
+    st.divider()
+    
+    st.subheader("Diabéticos")
+    
+    col_diabeticos_1, col_diabeticos_2, col_diabeticos_3 = st.columns(3, vertical_alignment="bottom")
+    
+    with col_diabeticos_1:
+        n_diabeticos = st.number_input(
+            "Número de diabéticos",
+            step=1,
+            value=100
+            )
+    with col_diabeticos_2:
+        tempo_diabeticos = st.number_input(
+            "Tempo por consulta",
+            step=5,
+            value=30
+            )
+    with col_diabeticos_3:
+        n_consultas_diabeticos = st.number_input(
+            "Número de consultas por ano",
+            step=1,
+            value=2
+            )
+        
 
     st.divider()
 
