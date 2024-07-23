@@ -2,7 +2,7 @@ import streamlit as st
 
 
 def main():
-    st.title("Hello World!")
+    st.title("Calculadora Horário MGF")
 
 
 if __name__ == "__main__":

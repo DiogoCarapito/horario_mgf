@@ -1,4 +1,4 @@
-from Home import main
+from Calculadora import main
 
 
 def test_main():

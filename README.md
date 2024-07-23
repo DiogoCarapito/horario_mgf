@@ -1,7 +1,9 @@
-[![Github Actions Workflow](https://github.com/DiogoCarapito/streamlit_app_template/actions/workflows/main.yaml/badge.svg)](https://github.com/DiogoCarapito/streamlit_app_template/actions/workflows/main.yaml)
+[![Github Actions Workflow](https://github.com/DiogoCarapito/streamlit_app_template/actions/workflows/main.yaml/badge.svg)](https://github.com/DiogoCarapito/horario_mgf/actions/workflows/main.yaml)
 
-# streamlit_app_template
-Streamlit python project template
+# Horário MGF
+Calculadora de Horário de MGF
+
+Ferramenta para planear o horario em função das caracteristicas da lista
 
 ## cheat sheet
 
