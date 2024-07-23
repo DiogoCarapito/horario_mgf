@@ -121,7 +121,7 @@ def main():
             )
     with col_gravidas_2:
         st.session_state["tempo_consulta_gravidas"] = st.number_input(
-            "Tempo por consulta",
+            "Tempo por consulta gravida",
             step=5,
             value=30
             )
@@ -147,7 +147,7 @@ def main():
             )
     with col_diabeticos_2:
         st.session_state["tempo_diabeticos"] = st.number_input(
-            "Tempo por consulta",
+            "Tempo por consulta diabéticos",
             step=5,
             value=30
             )
