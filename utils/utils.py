@@ -1,85 +1,40 @@
 import streamlit as st
 
-
 @st.cache_data
-def calculos(dados):
-    total_horas_trabalho_ano = (
-        dados["n_semanas_trabalho"] * dados["n_horas_semanal_base"]
-    )
+def initial_values():
+    return {  
+        "radio_horas_consultas": "Horas",
+        "n_horas_base": 40,
+        "n_horas_nao_assistencial": 4,
+        "p_doneça_aguda": 0.3,
+        "tempo_consulta_doença_aguda": 15,
+        "n_semanas_trabalho_anual": 44,
+        
+        "n_crianças_1_ano": 15,
+        "tempo_consulta_crianças_1_ano": 30,
+        "n_consultas_crianças_1_ano": 6,
+        
+        "n_crianças_1_2_anos": 17,
+        "tempo_consulta_crianças_1_2_anos": 30,
+        "n_consultas_crianças_1_2_anos": 5,
+        
+        "n_crianças_2_18_anos": 40,
+        "tempo_consulta_crianças_2_18_anos": 30,
+        "taxa_utilização_crianças_2_18_anos": 50,
+        
+        "n_mulheres_idade_fertil": 200,
+        "taxa_utilização_mulheres_idade_fertil": 50,
+        "tempo_consulta_mulheres_idade_fertil": 20,
+        
+        "n_nascimentos_ano_anterior": 100,
+        "tempo_consulta_diabeticos": 30,
+        "n_consultas_diabeticos": 2,
 
-    horas_semana_crianças_1_ano = round(
-        dados["n_crianças_1_ano"]
-        * dados["n_consultas_crianças_1_ano"]
-        * dados["tempo_consulta_crianças_1_ano"]
-        / 60
-        / dados["n_semanas_trabalho"],
-        2,
-    )
-    n_consultas_semanal_crianças_1_ano = round(
-        dados["n_crianças_1_ano"]
-        * dados["n_consultas_crianças_1_ano"]
-        / dados["n_semanas_trabalho"],
-        1,
-    )
-
-    horas_semana_crianças_1_2_anos = round(
-        dados["n_crianças_1_2_anos"]
-        * dados["n_consultas_crianças_1_2_anos"]
-        * dados["tempo_consulta_crianças_1_2_anos"]
-        / 60
-        / dados["n_semanas_trabalho"],
-        2,
-    )
-    n_consultas_semanal_crianças_1_2_anos = round(
-        dados["n_crianças_1_2_anos"]
-        * dados["n_consultas_crianças_1_2_anos"]
-        / dados["n_semanas_trabalho"],
-        1,
-    )
-
-    horas_semana_crianças_2_18_anos = round(
-        dados["n_crianças_2_18_anos"]
-        * dados["n_consultas_crianças_2_18_anos"]
-        * dados["tempo_consulta_crianças_2_18_anos"]
-        / 60
-        / dados["n_semanas_trabalho"],
-        2,
-    )
-    n_consultas_semanal_crianças_2_18_anos = round(
-        dados["n_crianças_2_18_anos"]
-        * dados["n_consultas_crianças_2_18_anos"]
-        / dados["n_semanas_trabalho"],
-        1,
-    )
-
-    horas_total_saude_infantil = round(
-        horas_semana_crianças_1_ano
-        + horas_semana_crianças_1_2_anos
-        + horas_semana_crianças_2_18_anos,
-        1,
-    )
-    n_consultas_total_saude_infantil = round(
-        n_consultas_semanal_crianças_1_ano
-        + n_consultas_semanal_crianças_1_2_anos
-        + n_consultas_semanal_crianças_2_18_anos,
-        1,
-    )
-
-    return {
-        "total_horas_trabalho_ano": total_horas_trabalho_ano,
-        "horas_semana_crianças_1_ano": horas_semana_crianças_1_ano,
-        "n_consultas_semanal_crianças_1_ano": n_consultas_semanal_crianças_1_ano,
-        "horas_semana_crianças_1_2_anos": horas_semana_crianças_1_2_anos,
-        "n_consultas_semanal_crianças_1_2_anos": n_consultas_semanal_crianças_1_2_anos,
-        "horas_semana_crianças_2_18_anos": horas_semana_crianças_2_18_anos,
-        "n_consultas_semanal_crianças_2_18_anos": n_consultas_semanal_crianças_2_18_anos,
-        "horas_total_saude_infantil": horas_total_saude_infantil,
-        "n_consultas_total_saude_infantil": n_consultas_total_saude_infantil,
     }
+        
+    if "radio_horas_consultas" not in st.session_state:
+        st.session_state["radio_horas_consultas"] = "Horas"
 
-
-@st.cache_data
-def session_state_initialization():
     if "n_crianças_1_ano" not in st.session_state:
         st.session_state["n_crianças_1_ano"] = 15
     if "tempo_consulta_crianças_1_ano" not in st.session_state:
@@ -99,7 +54,7 @@ def session_state_initialization():
     if "tempo_consulta_crianças_2_18_anos" not in st.session_state:
         st.session_state["tempo_consulta_crianças_2_18_anos"] = 30
     if "n_consultas_crianças_2_18_anos" not in st.session_state:
-        st.session_state["n_consultas_crianças_2_18_anos"] = 5
+        st.session_state["taxa_utilização_crianças_2_18_anos"] = 50
 
     if "n_mulheres_idade_fertil" not in st.session_state:
         st.session_state["n_mulheres_idade_fertil"] = 200

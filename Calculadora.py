@@ -1,6 +1,8 @@
 import streamlit as st
 
-from utils.utils import session_state_initialization, calculos
+from utils.utils import initial_values
+from utils.calculations import calculos
+from utils.sidebar import sidebar_results
 
 
 def main():
@@ -10,7 +12,45 @@ def main():
         "Cálculo da distribuição do tempo de trabalho dos médicos de família dependendo das características da lista."
     )
 
-    session_state_initialization()
+    
+    
+    if "input_horario" not in st.session_state:
+        st.session_state["input_horario"] = initial_values()
+
+    st.subheader("Horário Base")
+    col_horario_base_1, col_horario_base_2, col_horario_base_3 = st.columns(
+        3, vertical_alignment="bottom"
+    )
+
+    with col_horario_base_1:
+        st.session_state["n_horas_semanal_base"] = st.number_input(
+            "Nº de horas base", 0, 60, 40
+        )
+
+    with col_horario_base_2:
+        st.session_state["n_semanas_trabalho"] = st.number_input(
+            "Nº de semanas por ano", 0, 52, 44
+        )
+
+    with col_horario_base_3:
+        st.session_state["n_horas_nao_assistencial"] = st.number_input(
+            "Nº de horas não assistencial", 0, 40, 4
+        )
+
+    col_doença_aguda_1, col_doença_aguda_2 = st.columns(
+        [2, 1], vertical_alignment="bottom"
+    )
+    with col_doença_aguda_1:
+        st.session_state["p_doneça_aguda"] = st.slider(
+            "Percentagem de doença aguda", 0, 100, 30
+        )
+
+    with col_doença_aguda_2:
+        st.session_state["tempo_consulta_doença_aguda"] = st.number_input(
+            "Tempo por consulta doença aguda", 0, 30, 15
+        )
+
+    st.divider()
 
     st.subheader("Crianças < 1 ano")
     col_crianças_1_ano_1, col_crianças_1_ano_2, n_crianças_1_ano_3 = st.columns(
@@ -59,7 +99,7 @@ def main():
 
     with col_crianças_jovens_1:
         st.session_state["n_crianças_2_18_anos"] = st.number_input(
-            "Nº de crianças/jovens entre 2 e 18 anos", step=1, value=40
+            "Nº de crianças/jovens entre 2 e 18 anos", step=1, value=50
         )
     with col_crianças_jovens_2:
         st.session_state["tempo_consulta_crianças_2_18_anos"] = st.number_input(
@@ -67,10 +107,11 @@ def main():
         )
 
     with col_crianças_jovens_3:
-        st.session_state["n_consultas_crianças_2_18_anos"] = st.number_input(
-            "Nº de consultas a crianças/jovens entre 2 e 18 anos por ano",
-            step=1,
-            value=5,
+        st.session_state["taxa_utilização_crianças_2_18_anos"] = st.slider(
+            "Taxa de consulta crianças/jovens entre 2 e 18 anos (%)",
+            0,
+            100,
+            50,
         )
 
     st.divider()
@@ -93,8 +134,8 @@ def main():
         )
 
     with col_mulheres_idade_fertil_3:
-        st.session_state["taxa_utilização_mulheres_idade_fertil"] = st.number_input(
-            "Taxa de utilização de consultas (%) anual", step=1, value=50
+        st.session_state["taxa_utilização_mulheres_idade_fertil"] = st.slider(
+            "Taxa de utilização de consultas (%) anual", 0, 100, 50
         )
 
     st.divider()
@@ -140,29 +181,6 @@ def main():
 
     st.divider()
 
-    st.session_state["n_horas_semanal_base"] = st.slider("Nº de horas base", 0, 60, 40)
-
-    st.session_state["n_horas_nao_assistencial"] = st.slider(
-        "Nº de horas não assistencial", 0, 40, 4
-    )
-
-    col_doença_aguda_1, col_doença_aguda_2 = st.columns(2, vertical_alignment="bottom")
-    with col_doença_aguda_1:
-        st.session_state["p_doneça_aguda"] = st.slider(
-            "Percentagem de doença aguda", 0, 100, 30
-        )
-
-    with col_doença_aguda_2:
-        st.session_state["tempo_consulta_doença_aguda"] = st.number_input(
-            "Tempo por consulta doença aguda", 0, 30, 15
-        )
-
-    st.session_state["n_semanas_trabalho"] = st.slider(
-        "Nº de semanas de trabalho por ano", 0, 52, 44
-    )
-
-    st.divider()
-
     dados = {
         "n_crianças_1_ano": st.session_state["n_crianças_1_ano"],
         "tempo_consulta_crianças_1_ano": st.session_state[
@@ -180,8 +198,8 @@ def main():
         "tempo_consulta_crianças_2_18_anos": st.session_state[
             "tempo_consulta_crianças_2_18_anos"
         ],
-        "n_consultas_crianças_2_18_anos": st.session_state[
-            "n_consultas_crianças_2_18_anos"
+        "taxa_utilização_crianças_2_18_anos": st.session_state[
+            "taxa_utilização_crianças_2_18_anos"
         ],
         "n_mulheres_idade_fertil": st.session_state["n_mulheres_idade_fertil"],
         "taxa_utilização_mulheres_idade_fertil": st.session_state[
@@ -205,22 +223,20 @@ def main():
 
     resultados = calculos(dados)
 
-    st.header("Resultados detalhados")
-
-    st.divider()
+    st.title("Resultados detalhados")
 
     st.metric("Nº de horas de trabalho anual: ", resultados["total_horas_trabalho_ano"])
 
     st.divider()
-    st.header("Saúde Infantil")
-    st.metric(
-        "Nº total de horas dedicadas à saúde infantil: ",
-        resultados["horas_total_saude_infantil"],
-    )
-    st.metric(
-        "Nº total de consultas de saúde infantil: ",
-        resultados["n_consultas_total_saude_infantil"],
-    )
+    # st.header("Saúde Infantil")
+    # st.metric(
+    #     "Nº total de horas dedicadas à saúde infantil: ",
+    #     resultados["horas_total_saude_infantil"],
+    # )
+    # st.metric(
+    #     "Nº total de consultas de saúde infantil: ",
+    #     resultados["n_consultas_total_saude_infantil"],
+    # )
 
     st.subheader("Crianças < 1 ano")
     st.metric(
@@ -256,15 +272,7 @@ def main():
 
     st.sidebar.title("Resultados")
 
-    st.sidebar.subheader("Saúde Infantil")
-    st.sidebar.metric(
-        "Nº de horas semanais Saúde Infantil: ",
-        resultados["horas_total_saude_infantil"],
-    )
-    st.sidebar.metric(
-        "Nº de consultas semanais Saúde Infantil: ",
-        resultados["n_consultas_total_saude_infantil"],
-    )
+    sidebar_results(resultados)
 
 
 if __name__ == "__main__":
