@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def sidebar_results(resultados):
     st.session_state["radio_horas_consultas"] = st.sidebar.radio(
         "Horas/Nº de consultas",

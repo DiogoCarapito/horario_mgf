@@ -1,43 +1,37 @@
 import streamlit as st
 
+
 def valores_iniciais():
-    return {  
+    return {
         "radio_horas_consultas": "Horas",
         "n_horas_base": 40,
         "n_semanas_trabalho_anual": 44,
         "n_horas_nao_assistencial": 4,
         "p_doneça_aguda": 30,
         "tempo_consulta_doença_aguda": 15,
-        
         "tempo_consulta_crianças_1_ano": 30,
         "n_crianças_1_ano": 15,
         "n_consultas_crianças_1_ano": 6,
-        
         "n_crianças_1_2_anos": 20,
         "tempo_consulta_crianças_1_2_anos": 30,
         "n_consultas_crianças_1_2_anos": 3,
-        
         "n_crianças_2_18_anos": 40,
         "tempo_consulta_crianças_2_18_anos": 30,
         "taxa_utilização_crianças_2_18_anos": 50,
-        
         "n_mulheres_idade_fertil": 200,
         "tempo_consulta_mulheres_idade_fertil": 20,
         "taxa_utilização_mulheres_idade_fertil": 50,
-        
         "n_nascimentos_ano_anterior": 10,
-        "tempo_consulta_gravidas":30,
+        "tempo_consulta_gravidas": 30,
         "n_consultas_gravidas": 7,
-        
         "n_diabeticos": 150,
         "tempo_consulta_diabeticos": 30,
         "n_consultas_diabeticos": 2,
-
     }
+
 
 @st.cache_data
 def initial_values():
-        
     if "radio_horas_consultas" not in st.session_state:
         st.session_state["radio_horas_consultas"] = "Horas"
 
