@@ -21,7 +21,7 @@ def sidebar_results(resultados):
             resultados["n_consultas_total_saude_infantil"],
         )
 
-    st.sidebar.subheader("Saude Mulher")
+    st.sidebar.subheader("Planeamento Familiar")
 
     st.sidebar.subheader("Saude Materna")
 
