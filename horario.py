@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.utils import initial_values, valores_iniciais
+from utils.utils import valores_iniciais
 from utils.calculations import calculos
 from utils.sidebar import sidebar_results
 
@@ -11,13 +11,12 @@ def main():
         "Cálculo da distribuição do tempo de trabalho dos médicos de família dependendo das características da lista."
     )
 
-    if "input_horario" not in st.session_state:
-        st.session_state["input_horario"] = initial_values()
+    # if "input_horario" not in st.session_state:
+    #     st.session_state["input_horario"] = initial_values()
 
     if "valores_horario" not in st.session_state:
         st.session_state["valores_horario"] = valores_iniciais()
 
-    # st.write(st.session_state["valores_horario"]["n_crianças_1_ano"])
 
     st.subheader("Horário Base")
     col_horario_base_1, col_horario_base_2, col_horario_base_3 = st.columns(
@@ -224,8 +223,8 @@ def main():
         st.session_state["n_diabeticos"] = st.number_input(
             "Nº de diabéticos",
             step=1,
-            # value=st.session_state["valores_horario"]["n_diabeticos"]
-            value=2,
+            value=st.session_state["valores_horario"]["n_diabeticos"]
+            #value=2,
         )
     with col_diabeticos_2:
         st.session_state["tempo_consulta_diabeticos"] = st.number_input(
@@ -284,50 +283,50 @@ def main():
 
     resultados = calculos(dados)
 
-    st.title("Resultados detalhados")
+    # st.title("Resultados detalhados")
 
-    st.metric("Nº de horas de trabalho anual: ", resultados["total_horas_trabalho_ano"])
+    # st.metric("Nº de horas de trabalho anual: ", resultados["total_horas_trabalho_ano"])
 
-    st.divider()
-    # st.header("Saúde Infantil")
+    # st.divider()
+    # # st.header("Saúde Infantil")
+    # # st.metric(
+    # #     "Nº total de horas dedicadas à saúde infantil: ",
+    # #     resultados["horas_total_saude_infantil"],
+    # # )
+    # # st.metric(
+    # #     "Nº total de consultas de saúde infantil: ",
+    # #     resultados["n_consultas_total_saude_infantil"],
+    # # )
+
+    # st.subheader("Crianças < 1 ano")
     # st.metric(
-    #     "Nº total de horas dedicadas à saúde infantil: ",
-    #     resultados["horas_total_saude_infantil"],
+    #     "Nº de horas semanais dedicadas a crianças < 1 ano: ",
+    #     resultados["horas_semana_crianças_1_ano"],
     # )
     # st.metric(
-    #     "Nº total de consultas de saúde infantil: ",
-    #     resultados["n_consultas_total_saude_infantil"],
+    #     "Nº de conusltas semanais a crianças < 1 anos",
+    #     resultados["n_consultas_semanal_crianças_1_ano"],
     # )
 
-    st.subheader("Crianças < 1 ano")
-    st.metric(
-        "Nº de horas semanais dedicadas a crianças < 1 ano: ",
-        resultados["horas_semana_crianças_1_ano"],
-    )
-    st.metric(
-        "Nº de conusltas semanais a crianças < 1 anos",
-        resultados["n_consultas_semanal_crianças_1_ano"],
-    )
+    # st.subheader("Crianças entre 1 e 2 anos")
+    # st.metric(
+    #     "Nº de horas semanais dedicadas a crianças entre 1 e 2 anos: ",
+    #     resultados["horas_semana_crianças_1_2_anos"],
+    # )
+    # st.metric(
+    #     "Nº de consultas semanais a crianças entre 1 e 2 anos",
+    #     resultados["n_consultas_semanal_crianças_1_2_anos"],
+    # )
 
-    st.subheader("Crianças entre 1 e 2 anos")
-    st.metric(
-        "Nº de horas semanais dedicadas a crianças entre 1 e 2 anos: ",
-        resultados["horas_semana_crianças_1_2_anos"],
-    )
-    st.metric(
-        "Nº de consultas semanais a crianças entre 1 e 2 anos",
-        resultados["n_consultas_semanal_crianças_1_2_anos"],
-    )
-
-    st.subheader("Crianças e jovens entre 2 e 18 anos")
-    st.metric(
-        "Nº de horas semanais dedicadas a crianças e jovens entre 2 e 18 anos: ",
-        resultados["horas_semana_crianças_2_18_anos"],
-    )
-    st.metric(
-        "Nº de consultas semanais a crianças e jovens entre 2 e 18 anos",
-        resultados["n_consultas_semanal_crianças_2_18_anos"],
-    )
+    # st.subheader("Crianças e jovens entre 2 e 18 anos")
+    # st.metric(
+    #     "Nº de horas semanais dedicadas a crianças e jovens entre 2 e 18 anos: ",
+    #     resultados["horas_semana_crianças_2_18_anos"],
+    # )
+    # st.metric(
+    #     "Nº de consultas semanais a crianças e jovens entre 2 e 18 anos",
+    #     resultados["n_consultas_semanal_crianças_2_18_anos"],
+    # )
 
     # Sidebar
 
