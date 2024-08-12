@@ -5,6 +5,7 @@
 Calculadora de Horário de MGF
 
 Ferramenta para planear o horario em função das caracteristicas da lista
+Disponível em [https://horario-mgf.onrender.com](https://horario-mgf.onrender.com)
 
 ## cheat sheet
 
